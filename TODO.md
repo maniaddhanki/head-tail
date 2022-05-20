@@ -1,7 +1,9 @@
 **TODO :**
+-[ ] refactor head
 
 **MAYBE :**
 - [ ] consider an edge case of traling newlines
+- [ ] consider extracting count and byte to new functions
 **DONE :**
 - [x] make `src` and `test` directories
 - [x] make `testHead.js`
@@ -15,3 +17,5 @@
 - [x] consider extracting spliting and joining of lines to functions
 - [x] refactor head
 - [x] set default count to 10
+- [x] test firstNLines
+- [x] implement first bytes -c
