@@ -3,7 +3,6 @@
 
 **MAYBE :**
 - [ ] consider an edge case of traling newlines
-- [ ] consider seperating spliting and joining of lines
 **DONE :**
 - [x] make `src` and `test` directories
 - [x] make `testHead.js`
@@ -14,3 +13,5 @@
 - [x] make default count 2 
 - [x] make `head.js` src directory
 - [x] make head work for variable line count
+- [x] consider extracting spliting and joining of lines to functions
+- [x] refactor head
