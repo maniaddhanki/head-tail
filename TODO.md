@@ -1,5 +1,4 @@
 **TODO :**
-- [ ] set default count to 10
 
 **MAYBE :**
 - [ ] consider an edge case of traling newlines
@@ -15,3 +14,4 @@
 - [x] make head work for variable line count
 - [x] consider extracting spliting and joining of lines to functions
 - [x] refactor head
+- [x] set default count to 10
