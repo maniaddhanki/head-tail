@@ -1,11 +1,8 @@
 **TODO :**
- - [ ] test countByLines function
- - [ ] set default count in head instead of countByLines
+ - [ ] make a headMain function
 
 **MAYBE :**
-- [ ] consider a richer structure of handling data
 - [ ] consider an edge case of traling newlines
-- [ ] consider extracting count and byte to new functions
 **DONE :**
 - [x] make `src` and `test` directories
 - [x] make `testHead.js`
@@ -23,3 +20,7 @@
 - [x] implement first bytes -c
 -[x] refactor head
   - [x] think for a better way of choosing option
+- [x] test countByLines function
+- [x] consider extracting count and byte to new functions
+- [x] consider a richer structure of handling data
+- [x] set default count in head instead of countByLines

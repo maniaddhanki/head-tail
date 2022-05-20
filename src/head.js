@@ -7,18 +7,19 @@ const splitLines = content => content.split('\n');
 const joinLines = lines => lines.join('\n');
 
 const countByLines = (content, count) => {
-  const lineCount = count || 10;
   const lines = splitLines(content);
-  const firstLines = firstNLines(lines, lineCount);
+  const firstLines = firstNLines(lines, count);
   return joinLines(firstLines);
 };
 
-const head = (content, countBy, count) => {
-  const countBases = { line: countByLines, byte: firstNCharacters };
-  const callee = countBy ? countBases[countBy] : countBases.line;
-  return callee(content, count);
+const head = (content, { count, bytes }) => {
+  const countBases = { count: countByLines, bytes: firstNCharacters };
+  const callee = bytes ? countBases.bytes : countBases.count;
+  const parameter = bytes || count || 10;
+  return callee(content, parameter);
 };
 
 exports.head = head;
 exports.firstNLines = firstNLines;
 exports.firstNCharacters = firstNCharacters;
+exports.countByLines = countByLines;
