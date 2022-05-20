@@ -1,6 +1,9 @@
 **TODO :**
- - [ ] test countLines function
+ - [ ] test countByLines function
+ - [ ] set default count in head instead of countByLines
+
 **MAYBE :**
+- [ ] consider a richer structure of handling data
 - [ ] consider an edge case of traling newlines
 - [ ] consider extracting count and byte to new functions
 **DONE :**

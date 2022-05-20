@@ -6,7 +6,7 @@ const splitLines = content => content.split('\n');
 
 const joinLines = lines => lines.join('\n');
 
-const countLines = (content, count) => {
+const countByLines = (content, count) => {
   const lineCount = count || 10;
   const lines = splitLines(content);
   const firstLines = firstNLines(lines, lineCount);
@@ -14,7 +14,7 @@ const countLines = (content, count) => {
 };
 
 const head = (content, countBy, count) => {
-  const countBases = { line: countLines, byte: firstNCharacters };
+  const countBases = { line: countByLines, byte: firstNCharacters };
   const callee = countBy ? countBases[countBy] : countBases.line;
   return callee(content, count);
 };
