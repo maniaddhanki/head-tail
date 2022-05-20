@@ -1,6 +1,6 @@
 **TODO :**
- - [ ] make a headMain function
-
+- [ ] implement parseArgs function
+- [ ] read commandline arguments in head.js
 **MAYBE :**
 - [ ] consider an edge case of traling newlines
 **DONE :**
@@ -24,3 +24,5 @@
 - [x] consider extracting count and byte to new functions
 - [x] consider a richer structure of handling data
 - [x] set default count in head instead of countByLines
+- [x] make a headMain function
+- [x] rename `src/head.js` to `src/headLib.js`
