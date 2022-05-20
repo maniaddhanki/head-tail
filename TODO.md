@@ -1,6 +1,5 @@
 **TODO :**
--[ ] refactor head
-
+ - [ ] test countLines function
 **MAYBE :**
 - [ ] consider an edge case of traling newlines
 - [ ] consider extracting count and byte to new functions
@@ -19,3 +18,5 @@
 - [x] set default count to 10
 - [x] test firstNLines
 - [x] implement first bytes -c
+-[x] refactor head
+  - [x] think for a better way of choosing option

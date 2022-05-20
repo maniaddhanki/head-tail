@@ -21,9 +21,12 @@ describe('head', () => {
     assert.strictEqual(head('a\nb\nc\nd\ne\n', 'line', 3), 'a\nb\nc');
     assert.strictEqual(head('a\nb\nc\nd\ne\n', 'line', 4), 'a\nb\nc\nd');
   });
-  it('should count characters when byte is specified', () => {
+  it('should give first characters when byte is specified', () => {
     assert.strictEqual(head('hello', 'byte', 2), 'he');
     assert.strictEqual(head('\nhi', 'byte', 2), '\nh');
+  });
+  it('by should give firstlines unless byte is specified ', () => {
+    assert.strictEqual(head('a\nb\nc'), 'a\nb\nc');
   });
 });
 
