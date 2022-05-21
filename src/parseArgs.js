@@ -7,9 +7,11 @@ const defaultOption = function (args) {
 const parseWithOption = function (args) {
   const keys = { '-n': 'count', '-c': 'byte' };
   const option = {};
-  const key = keys[args[0]];
-  option[key] = +args[1];
-  const files = args.slice(2);
+  const key = args.find(item => (/^-.$/).test(item));
+  const keyIndex = args.lastIndexOf(key);
+  const value = args[keyIndex + 1];
+  const files = args.slice(keyIndex + 2);
+  option[keys[key]] = +value;
   return { files, option };
 };
 

@@ -30,3 +30,4 @@
 - [x] make parseArgs accept multiple files
 - [x] refactor parseArgs
 - [x] test parseWithOption and defaultOption
+- [x] make parseArgs over write options

@@ -23,6 +23,9 @@ describe('parseWithOption', () => {
   it('should give byte option when -c is specified', () => {
     assert.deepStrictEqual(parseWithOption(['-c', '4', 'a.txt', 'b.txt']), { files: ['a.txt', 'b.txt'], option: { byte: 4 } });
   });
+  it('should overWrite option if repeated', () => {
+    assert.deepStrictEqual(parseWithOption(['-n', '5', '-n', '2', 'a.txt', 'b.txt']), { files: ['a.txt', 'b.txt'], option: { count: 2 } });
+  });
 });
 
 describe('defaultOption', () => {
