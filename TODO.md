@@ -1,4 +1,5 @@
 **TODO :**
+- [ ] refactor parseArgs
 - [ ] implement parseArgs function
 - [ ] read commandline arguments in head.js
 **MAYBE :**
@@ -26,3 +27,4 @@
 - [x] set default count in head instead of countByLines
 - [x] make a headMain function
 - [x] rename `src/head.js` to `src/headLib.js`
+- [x] implementation and testing of parseArgs are in half way
