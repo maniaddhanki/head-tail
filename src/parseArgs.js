@@ -18,3 +18,5 @@ const parseArgs = function (args) {
 };
 
 exports.parseArgs = parseArgs;
+exports.parseWithOption = parseWithOption;
+exports.defaultOption = defaultOption;

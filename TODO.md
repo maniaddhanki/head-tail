@@ -1,5 +1,4 @@
 **TODO :**
-- [ ] refactor parseArgs
 - [ ] implement parseArgs function
 - [ ] read commandline arguments in head.js
 **MAYBE :**
@@ -29,3 +28,5 @@
 - [x] rename `src/head.js` to `src/headLib.js`
 - [x] implementation and testing of parseArgs are in half way
 - [x] make parseArgs accept multiple files
+- [x] refactor parseArgs
+- [x] test parseWithOption and defaultOption
