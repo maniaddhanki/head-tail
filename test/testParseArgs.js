@@ -9,7 +9,7 @@ describe('parseArgs', () => {
     assert.deepStrictEqual(parseArgs(['-n', '5', 'a.txt']), { files: ['a.txt'], option: { count: 5 } });
   });
   it('should return byte when -n is specified', () => {
-    assert.deepStrictEqual(parseArgs(['-c', '4', 'a.txt']), { files: ['a.txt'], option: { 'byte': 4 } });
+    assert.deepStrictEqual(parseArgs(['-c', '4', 'a.txt']), { files: ['a.txt'], option: { 'bytes': 4 } });
   });
   it('should accept multiple files and single option', () => {
     assert.deepStrictEqual(parseArgs(['-n', '5', 'a.txt', 'b.txt']), { files: ['a.txt', 'b.txt'], option: { 'count': 5 } });
@@ -21,7 +21,7 @@ describe('parseWithOption', () => {
     assert.deepStrictEqual(parseWithOption(['-n', '5', 'a.txt', 'b.txt']), { files: ['a.txt', 'b.txt'], option: { count: 5 } });
   });
   it('should give byte option when -c is specified', () => {
-    assert.deepStrictEqual(parseWithOption(['-c', '4', 'a.txt', 'b.txt']), { files: ['a.txt', 'b.txt'], option: { byte: 4 } });
+    assert.deepStrictEqual(parseWithOption(['-c', '4', 'a.txt', 'b.txt']), { files: ['a.txt', 'b.txt'], option: { bytes: 4 } });
   });
   it('should overWrite option if repeated', () => {
     assert.deepStrictEqual(parseWithOption(['-n', '5', '-n', '2', 'a.txt', 'b.txt']), { files: ['a.txt', 'b.txt'], option: { count: 2 } });

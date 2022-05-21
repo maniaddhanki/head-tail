@@ -1,4 +1,5 @@
 **TODO :**
+- [ ] make head to work for multiple files
 - [ ] implement parseArgs function
 - [ ] read commandline arguments in head.js
 **MAYBE :**
@@ -18,7 +19,7 @@
 - [x] set default count to 10
 - [x] test firstNLines
 - [x] implement first bytes -c
--[x] refactor head
+- [x] refactor head
   - [x] think for a better way of choosing option
 - [x] test countByLines function
 - [x] consider extracting count and byte to new functions
@@ -31,3 +32,4 @@
 - [x] refactor parseArgs
 - [x] test parseWithOption and defaultOption
 - [x] make parseArgs over write options
+- [x] introduced parsing in headMain

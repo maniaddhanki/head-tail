@@ -3,19 +3,19 @@ const { head, firstNLines, firstNCharacters, countByLines, headMain } = require(
 
 describe('head', () => {
   it('should give content back when it is of one line', () => {
-    assert.strictEqual(head('hello', {}), 'hello');
-    assert.strictEqual(head('hi', {}), 'hi');
+    assert.strictEqual(head('hello', { count: 10 }), 'hello');
+    assert.strictEqual(head('hi', { count: 10 }), 'hi');
   });
   it('should give content back when lines are less than default count', () => {
-    assert.strictEqual(head('hello\nbye', {}), 'hello\nbye');
+    assert.strictEqual(head('hello\nbye', { count: 10 }), 'hello\nbye');
   });
   it('should give first ten lines of content by default', () => {
     let content = 'a\nb\nc\nd\ne\nf\ng\nh\ni\nj\nk';
     let expected = 'a\nb\nc\nd\ne\nf\ng\nh\ni\nj';
-    assert.strictEqual(head(content, {}), expected);
+    assert.strictEqual(head(content, { count: 10 }), expected);
     content = '1\n2\n3\n4\n5\n6\n7\n8\n9\n10\n11';
     expected = '1\n2\n3\n4\n5\n6\n7\n8\n9\n10';
-    assert.strictEqual(head(content, {}), expected);
+    assert.strictEqual(head(content, { count: 10 }), expected);
   });
   it('should give given count of lines from first', () => {
     assert.strictEqual(head('a\nb\nc\nd\ne\n', { count: 3 }), 'a\nb\nc');
@@ -88,14 +88,14 @@ describe('headMain', () => {
     const content = '1\n2\n3\n4\n5\n6\n7\n8\n9\n10\n11';
     const expected = '1\n2\n3\n4\n5\n6\n7\n8\n9\n10';
     const readFunction = mockReadFileSync('a.txt', 'utf8', content);
-    assert.strictEqual(headMain(readFunction, 'a.txt', {}), expected);
+    assert.strictEqual(headMain(readFunction, ['a.txt']), expected);
   });
   it('should give given number of lines', () => {
     const readFunction = mockReadFileSync('a.txt', 'utf8', 'a\nb\nc');
-    assert.strictEqual(headMain(readFunction, 'a.txt', { count: 2 }), 'a\nb');
+    assert.strictEqual(headMain(readFunction, ['-n', '2', 'a.txt']), 'a\nb');
   });
   it('should give given number of bytes from file', () => {
     const readFunction = mockReadFileSync('a.txt', 'utf8', 'a\nb\nc');
-    assert.strictEqual(headMain(readFunction, 'a.txt', { bytes: 1 }), 'a');
+    assert.strictEqual(headMain(readFunction, ['-c', 1, 'a.txt']), 'a');
   });
 });

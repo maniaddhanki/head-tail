@@ -1,3 +1,5 @@
+const { parseArgs } = require('./parseArgs.js');
+
 const firstNLines = (lines, count) => lines.slice(0, count);
 
 const firstNCharacters = (content, count) => content.slice(0, count);
@@ -14,14 +16,16 @@ const countByLines = (content, count) => {
 
 const head = (content, { count, bytes }) => {
   const countBases = { count: countByLines, bytes: firstNCharacters };
-  const callee = bytes ? countBases.bytes : countBases.count;
-  const parameter = bytes || count || 10;
-  return callee(content, parameter);
+  if (isFinite(bytes)) {
+    return countBases.bytes(content, bytes);
+  }
+  return countBases.count(content, count);
 };
 
-const headMain = (readFunction, fileName, options) => {
-  const content = readFunction(fileName, 'utf8');
-  return head(content, options);
+const headMain = (readFunction, args) => {
+  const { files, option } = parseArgs(args);
+  const content = readFunction(files[0], 'utf8');
+  return head(content, option);
 };
 
 exports.head = head;

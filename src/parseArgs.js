@@ -5,7 +5,7 @@ const defaultOption = function (args) {
 };
 
 const parseWithOption = function (args) {
-  const keys = { '-n': 'count', '-c': 'byte' };
+  const keys = { '-n': 'count', '-c': 'bytes' };
   const option = {};
   const key = args.find(item => (/^-.$/).test(item));
   const keyIndex = args.lastIndexOf(key);
