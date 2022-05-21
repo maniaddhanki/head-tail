@@ -28,3 +28,4 @@
 - [x] make a headMain function
 - [x] rename `src/head.js` to `src/headLib.js`
 - [x] implementation and testing of parseArgs are in half way
+- [x] make parseArgs accept multiple files
