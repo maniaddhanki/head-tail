@@ -14,12 +14,12 @@ const countByLines = (content, count) => {
   return joinLines(firstLines);
 };
 
-const head = (content, { count, bytes }) => {
-  const countBases = { count: countByLines, bytes: firstNCharacters };
-  if (isFinite(bytes)) {
-    return countBases.bytes(content, bytes);
+const head = (content, { key, limit }) => {
+  const countBases = { count: countByLines, byte: firstNCharacters };
+  if (key === 'byte') {
+    return countBases.byte(content, limit);
   }
-  return countBases.count(content, count);
+  return countBases.count(content, limit);
 };
 
 const headMain = (readFunction, args) => {

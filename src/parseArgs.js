@@ -1,15 +1,14 @@
 const defaultOption = function (args) {
   const files = args;
-  const option = { count: 10 };
+  const option = { arg: '-n', key: 'count', limit: 10 };
   return { files, option };
 };
 
 const constructOption = function (arg, value) {
-  const keys = { '-n': 'count', '-c': 'bytes' };
-  const option = {};
+  const keys = { '-n': 'count', '-c': 'byte' };
   const key = keys[arg];
-  option[key] = +value;
-  return option;
+  const limit = +value;
+  return { arg, key, limit };
 };
 
 const integrateOption = arg => {
@@ -42,6 +41,10 @@ const fetchOptions = function (args) {
   return { files, options };
 };
 
+const validate = function (options) {
+  throw { usage: 'usage: head [-n lines | -c bytes] [file ...]' };
+};
+
 const parseWithOption = function (args) {
   const { files, options } = fetchOptions(args);
   const option = options[options.length - 1];
@@ -57,4 +60,5 @@ exports.parseWithOption = parseWithOption;
 exports.defaultOption = defaultOption;
 exports.fetchOptions = fetchOptions;
 exports.constructOption = constructOption;
-exports.integrateOption = integrateOption; 
+exports.integrateOption = integrateOption;
+exports.validate = validate;

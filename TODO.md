@@ -1,8 +1,6 @@
 **TODO :**
 - [ ] validate options
 - [ ] make head to work for multiple files
-- [ ] implement parseArgs function
-- [ ] read commandline arguments in head.js
 **MAYBE :**
 - [ ] consider an edge case of traling newlines
 **DONE :**
@@ -35,3 +33,6 @@
 - [x] make parseArgs over write options
 - [x] introduced parsing in headMain
 - [x] make head work for options with and without space;
+- [x] implement parseArgs function
+- [x] read commandline arguments in head.js
+- [x] make testValidate.js

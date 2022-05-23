@@ -3,30 +3,27 @@ const { head, firstNLines, firstNCharacters, countByLines, headMain } = require(
 
 describe('head', () => {
   it('should give content back when it is of one line', () => {
-    assert.strictEqual(head('hello', { count: 10 }), 'hello');
-    assert.strictEqual(head('hi', { count: 10 }), 'hi');
+    assert.strictEqual(head('hello', { arg: '-n', key: 'count', limit: 10 }), 'hello');
+    assert.strictEqual(head('hi', { arg: '-n', key: 'count', limit: 10 }), 'hi');
   });
   it('should give content back when lines are less than default count', () => {
-    assert.strictEqual(head('hello\nbye', { count: 10 }), 'hello\nbye');
+    assert.strictEqual(head('hello\nbye', { arg: '-n', key: 'count', limit: 10 }), 'hello\nbye');
   });
   it('should give first ten lines of content by default', () => {
     let content = 'a\nb\nc\nd\ne\nf\ng\nh\ni\nj\nk';
     let expected = 'a\nb\nc\nd\ne\nf\ng\nh\ni\nj';
-    assert.strictEqual(head(content, { count: 10 }), expected);
+    assert.strictEqual(head(content, { arg: '-n', key: 'count', limit: 10 }), expected);
     content = '1\n2\n3\n4\n5\n6\n7\n8\n9\n10\n11';
     expected = '1\n2\n3\n4\n5\n6\n7\n8\n9\n10';
-    assert.strictEqual(head(content, { count: 10 }), expected);
+    assert.strictEqual(head(content, { arg: '-n', key: 'count', limit: 10 }), expected);
   });
   it('should give given count of lines from first', () => {
-    assert.strictEqual(head('a\nb\nc\nd\ne\n', { count: 3 }), 'a\nb\nc');
-    assert.strictEqual(head('a\nb\nc\nd\ne\n', { count: 4 }), 'a\nb\nc\nd');
+    assert.strictEqual(head('a\nb\nc\nd\ne\n', { arg: '-n', key: 'count', limit: 3 }), 'a\nb\nc');
+    assert.strictEqual(head('a\nb\nc\nd\ne\n', { arg: '-n', key: 'count', limit: 4 }), 'a\nb\nc\nd');
   });
   it('should give first characters when byte is specified', () => {
-    assert.strictEqual(head('hello', { bytes: 2 }), 'he');
-    assert.strictEqual(head('\nhi', { bytes: 2 }), '\nh');
-  });
-  it('by default should give firstlines unless byte is specified ', () => {
-    assert.strictEqual(head('a\nb\nc', {}), 'a\nb\nc');
+    assert.strictEqual(head('hello', { arg: '-c', key: 'byte', limit: 2 }), 'he');
+    assert.strictEqual(head('\nhi', { arg: '-c', key: 'byte', limit: 2 }), '\nh');
   });
 });
 
