@@ -1,4 +1,5 @@
 **TODO :**
+- [ ] validate options
 - [ ] make head to work for multiple files
 - [ ] implement parseArgs function
 - [ ] read commandline arguments in head.js
@@ -33,3 +34,4 @@
 - [x] test parseWithOption and defaultOption
 - [x] make parseArgs over write options
 - [x] introduced parsing in headMain
+- [x] make head work for options with and without space;
