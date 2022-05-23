@@ -1,5 +1,6 @@
 **TODO :**
-- [ ] validate options
+- [ ] give appropriate error message
+- [ ] give error in error strem
 - [ ] make head to work for multiple files
 **MAYBE :**
 - [ ] consider an edge case of traling newlines
@@ -36,3 +37,4 @@
 - [x] implement parseArgs function
 - [x] read commandline arguments in head.js
 - [x] make testValidate.js
+- [x] validate options
