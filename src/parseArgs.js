@@ -5,7 +5,17 @@ const defaultOption = function (args) {
 };
 
 const fetchOptions = args => {
-  return args.filter(arg => (/^-..*$/).test(arg));
+  const options = [];
+  for (let index = 0; index < args.length; index++) {
+    if (args[index].startsWith('-')) {
+      options.push(args[index]);
+    }
+    if ((/^-[n c]$/).test(args[index])) {
+      options.push(args[index + 1]);
+      index++;
+    }
+  }
+  return options;
 };
 
 const isIntegratedOption = option => {
@@ -22,24 +32,18 @@ const findValue = function (option, nextElement) {
   return +nextElement;
 };
 
-const fetchFiles = (args, option, optionIndex) => {
-  let fileIndex = optionIndex + 2;
-  if (isIntegratedOption(option) || isFinite(option)) {
-    fileIndex = optionIndex + 1;
-  }
-  return args.slice(fileIndex);
-};
-
 const findSelection = option => option.includes('c') ? 'bytes' : 'count';
+
+const isKey = arg => arg.startsWith('-');
 
 const parseWithOption = function (args) {
   const option = {};
   const options = fetchOptions(args);
-  const key = options[options.length - 1];
-  const keyIndex = args.lastIndexOf(key);
+  const index = options.length - 1;
+  const key = isKey(options[index]) ? options[index] : options[index - 1];
   const selection = findSelection(key);
-  option[selection] = findValue(key, args[keyIndex + 1]);
-  const files = fetchFiles(args, key, keyIndex);
+  option[selection] = findValue(key, options[index]);
+  const files = args.slice(index + 1);
   return { files, option };
 };
 
@@ -51,7 +55,6 @@ exports.parseArgs = parseArgs;
 exports.parseWithOption = parseWithOption;
 exports.defaultOption = defaultOption;
 exports.fetchOptions = fetchOptions;
-exports.fetchFiles = fetchFiles;
 exports.findValue = findValue;
 exports.isIntegratedOption = isIntegratedOption;
 exports.findSelection = findSelection;

@@ -1,4 +1,4 @@
-const { parseArgs, parseWithOption, defaultOption, fetchOptions, fetchFiles, findValue, isIntegratedOption, findSelection } = require('../src/parseArgs.js');
+const { parseArgs, parseWithOption, defaultOption, fetchOptions, findValue, isIntegratedOption, findSelection } = require('../src/parseArgs.js');
 const assert = require('assert');
 
 describe('parseArgs', () => {
@@ -51,22 +51,10 @@ describe('defaultOption', () => {
 
 describe('fetchOptions', () => {
   it('should give all options in arguments', () => {
-    assert.deepStrictEqual(fetchOptions(['-n', '5', '-n4', '-5', 'a.txt', 'b.txt']), ['-n', '-n4', '-5']);
+    assert.deepStrictEqual(fetchOptions(['-n', '5', '-n4', '-5', 'a.txt', 'b.txt']), ['-n', '5', '-n4', '-5']);
   });
   it('should give empty array when no options are specified', () => {
     assert.deepStrictEqual(fetchOptions(['a.txt', 'b.txt']), []);
-  });
-});
-
-describe('fetchFiles', () => {
-  it('should give all given files', () => {
-    assert.deepStrictEqual(fetchFiles(['-n', '5', '-n4', '-5', 'a.txt', 'b.txt'], '-5', 3), ['a.txt', 'b.txt']);
-  });
-  it('if option has value in it ,files start with next element', () => {
-    assert.deepStrictEqual(fetchFiles(['-n5', 'a.txt'], '-n5', 0), ['a.txt']);
-  });
-  it('if option does not have value init then files start after option value', () => {
-    assert.deepStrictEqual(fetchFiles(['-n', '5', 'a.txt'], '-n', 0), ['a.txt']);
   });
 });
 

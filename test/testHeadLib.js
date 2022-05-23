@@ -96,6 +96,6 @@ describe('headMain', () => {
   });
   it('should give given number of bytes from file', () => {
     const readFunction = mockReadFileSync('a.txt', 'utf8', 'a\nb\nc');
-    assert.strictEqual(headMain(readFunction, ['-c', 1, 'a.txt']), 'a');
+    assert.strictEqual(headMain(readFunction, ['-c', '1', 'a.txt']), 'a');
   });
 });
