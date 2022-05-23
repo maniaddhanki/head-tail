@@ -1,4 +1,5 @@
-const { parseArgs, parseWithOption, defaultOption, fetchOptions, findValue, isIntegratedOption, findSelection } = require('../src/parseArgs.js');
+const { parseArgs, parseWithOption, defaultOption, fetchOptions, constructOption, integrateOption } = require('../src/parseArgs.js');
+
 const assert = require('assert');
 
 describe('parseArgs', () => {
@@ -51,43 +52,36 @@ describe('defaultOption', () => {
 
 describe('fetchOptions', () => {
   it('should give all options in arguments', () => {
-    assert.deepStrictEqual(fetchOptions(['-n', '5', '-n4', '-5', 'a.txt', 'b.txt']), ['-n', '5', '-n4', '-5']);
+    const expected = {
+      files: ['a.txt', 'b.txt'],
+      options: [{ count: 5 },
+      { count: 4 },
+      { count: 5 }]
+    };
+    assert.deepStrictEqual(fetchOptions(['-n', '5', '-n4', '-5', 'a.txt', 'b.txt']), expected);
   });
   it('should give empty array when no options are specified', () => {
-    assert.deepStrictEqual(fetchOptions(['a.txt', 'b.txt']), []);
+    const expected = {
+      files: ['a.txt', 'b.txt'],
+      options: []
+    };
+    assert.deepStrictEqual(fetchOptions(['a.txt', 'b.txt']), expected);
   });
 });
 
-describe('findValue', () => {
-  it('option has value in it', () => {
-    assert.strictEqual(findValue('-n5', 'a.txt'), 5);
-  });
-  it('option has value but not key', () => {
-    assert.strictEqual(findValue('-2', 'a.txt'), 2);
-  });
-  it('opion has value as next element', () => {
-    assert.strictEqual(findValue('-n', '3'), 3);
+describe('constructOption', () => {
+  it('should contruct option with given values', () => {
+    assert.deepStrictEqual(constructOption('-n', '2'), { count: 2 });
+    assert.deepStrictEqual(constructOption('-c', '5'), { bytes: 5 });
   });
 });
 
-describe('isIntegratedOption', () => {
-  it('is true if opition has both key and value', () => {
-    assert.strictEqual(isIntegratedOption('-n5'), true);
+describe('integrateOption', () => {
+  it('should contruct option of given key', () => {
+    assert.deepStrictEqual(integrateOption('-n1'), { count: 1 });
+    assert.deepStrictEqual(integrateOption('-c5'), { bytes: 5 });
   });
-  it('is false if either option does not have key or option doesnot have valude', () => {
-    assert.strictEqual(isIntegratedOption('-5'), false);
-    assert.strictEqual(isIntegratedOption('-n'), false);
-  });
-});
-
-describe('findSelection', () => {
-  it('should give count if c is not specified', () => {
-    assert.strictEqual(findSelection('-n'), 'count');
-    assert.strictEqual(findSelection('-n5'), 'count');
-    assert.strictEqual(findSelection('-5'), 'count');
-  });
-  it('should give byte if c is specified', () => {
-    assert.strictEqual(findSelection('-c5'), 'bytes');
-    assert.strictEqual(findSelection('-c'), 'bytes');
+  it('should contstruct count option if key is not specified', () => {
+    assert.deepStrictEqual(integrateOption('-7'), { count: 7 });
   });
 });
