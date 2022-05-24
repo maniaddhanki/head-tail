@@ -1,8 +1,9 @@
 **TODO :**
 - [ ] refactor fetchOptions
-- [ ] make head to work for multiple files
+
 **MAYBE :**
 - [ ] consider an edge case of traling newlines
+
 **DONE :**
 - [x] make `src` and `test` directories
 - [x] make `testHead.js`
@@ -39,3 +40,5 @@
 - [x] validate options
 - [x] give appropriate error message
 - [x] give error in error strem
+- [x] make head to work for multiple files
+- [x] make headMain.js and testHeadMain.js

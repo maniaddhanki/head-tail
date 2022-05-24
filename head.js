@@ -1,9 +1,9 @@
 const fs = require('fs');
-const { headMain } = require('./src/headLib.js');
+const { headMain } = require('./src/headMain.js');
 
 const main = () => {
   try {
-    console.log(headMain(fs.readFileSync, args));
+    headMain(fs.readFileSync, console.log, console.error, args);
   } catch (error) {
     console.error(error.message);
   }
