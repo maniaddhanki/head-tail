@@ -1,4 +1,5 @@
 **TODO :**
+- [ ] refactor fetchOptions
 - [ ] make head to work for multiple files
 **MAYBE :**
 - [ ] consider an edge case of traling newlines

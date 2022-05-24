@@ -1,3 +1,5 @@
+const { validateArgs } = require('./validation.js');
+
 const { parseArgs } = require('./parseArgs.js');
 
 const firstNLines = (lines, count) => lines.slice(0, count);
@@ -24,7 +26,15 @@ const head = (content, { key, limit }) => {
 
 const headMain = (readFunction, args) => {
   const { files, option } = parseArgs(args);
-  const content = readFunction(files[0], 'utf8');
+  validateArgs(files);
+  let content;
+  try {
+    content = readFunction(files[0], 'utf8');
+  } catch (error) {
+    throw {
+      message: `head: ${files[0]}: No such file or directory`
+    };
+  }
   return head(content, option);
 };
 

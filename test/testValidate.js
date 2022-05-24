@@ -1,6 +1,6 @@
 const assert = require('assert');
 
-const { validate, areFilesGiven } = require('../src/validation.js');
+const { validate, validateArgs } = require('../src/validation.js');
 
 describe('validate', () => {
   it('should throw error if unknown options are mentioned', () => {
@@ -25,8 +25,11 @@ describe('validate', () => {
   });
 });
 
-describe('areFilesGiven', () => {
-  it('should throw error if files are not given', () => {
-    assert.throws(() => areFilesGiven([]), { message: 'usage: head [-n lines | -c bytes] [file ...]' });
+describe('validateArgs', () => {
+  it('should throw error if arguments are not given', () => {
+    assert.throws(() => validateArgs([]), { message: 'usage: head [-n lines | -c bytes] [file ...]' });
+  });
+  it('should not given error if arguments are given', () => {
+    assert.strictEqual(validateArgs(['-n', '1']), undefined);
   });
 });

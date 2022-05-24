@@ -1,4 +1,4 @@
-const { validate, areFilesGiven } = require('./validation.js');
+const { validate, validateArgs } = require('./validation.js');
 
 const defaultOption = function (args) {
   const files = args;
@@ -13,7 +13,7 @@ const constructOption = function (arg, value) {
   return { arg, key, limit };
 };
 
-const integrateOption = arg => {
+const destructureOption = arg => {
   let key = arg.slice(0, 2);
   let value = arg.slice(2);
 
@@ -36,7 +36,7 @@ const fetchOptions = function (args) {
       options.push(constructOption(args[index], args[index + 1]));
       index++;
     } else {
-      options.push(integrateOption(args[index]));
+      options.push(destructureOption(args[index]));
     }
     index++;
   }
@@ -48,12 +48,12 @@ const parseWithOption = function (args) {
   const { files, options } = fetchOptions(args);
   const flag = options[0].arg;
   options.forEach(option => validate(option, flag));
-  areFilesGiven(files);
   const option = options[options.length - 1];
   return { files, option };
 };
 
 const parseArgs = function (args) {
+  validateArgs(args);
   return args[0].startsWith('-') ? parseWithOption(args) : defaultOption(args);
 };
 
@@ -62,4 +62,4 @@ exports.parseWithOption = parseWithOption;
 exports.defaultOption = defaultOption;
 exports.fetchOptions = fetchOptions;
 exports.constructOption = constructOption;
-exports.integrateOption = integrateOption;
+exports.destructureOption = destructureOption;

@@ -95,4 +95,18 @@ describe('headMain', () => {
     const readFunction = mockReadFileSync('a.txt', 'utf8', 'a\nb\nc');
     assert.strictEqual(headMain(readFunction, ['-c', '1', 'a.txt']), 'a');
   });
+  it('should throw error if file is not found', () => {
+    const readFunction = mockReadFileSync('a.txt', 'utf8', 'a\nb\nc');
+    assert.throws(() => headMain(readFunction, ['-n', '5', 'b.txt']), {
+      message: 'head: b.txt: No such file or directory'
+    });
+  });
+  it('should throw error if no arguments are given', () => {
+    const readFunction = mockReadFileSync('a.txt', 'utf8', 'a\nb\nc');
+    assert.throws(() => headMain(readFunction, []), { message: 'usage: head [-n lines | -c bytes] [file ...]' });
+  });
+  it('should throw error if no files are given', () => {
+    const readFunction = mockReadFileSync('a.txt', 'utf8', 'a\nb\nc');
+    assert.throws(() => headMain(readFunction, ['-n', '5']), { message: 'usage: head [-n lines | -c bytes] [file ...]' });
+  });
 });

@@ -1,6 +1,23 @@
-const isKnownKey = function (option) {
-  const knownKeys = ['-n', '-c'];
-  return knownKeys.includes(option.arg);
+const usage = 'usage: head [-n lines | -c bytes] [file ...]';
+
+const illegalflagError = (flag) => {
+  return { message: `head: illegal option -- ${flag.slice(1)}\n${usage}` };
+};
+
+const illegalcountError = (option) => {
+  const keys = { '-n': 'line', '-c': 'byte' };
+  const key = keys[option.arg];
+  const value = option.limit;
+  return { message: `head: illegal ${key} count -- ${value}\n${usage}` };
+};
+
+const combinationError = () => {
+  return { message: 'head: can\'t combine line and byte counts\n' + usage };
+};
+
+const isKnownflag = function (option) {
+  const knownflags = ['-n', '-c'];
+  return knownflags.includes(option.arg);
 };
 
 const isPositive = limit => limit > 0;
@@ -8,27 +25,22 @@ const isPositive = limit => limit > 0;
 const isCombined = (key, optionKey) => key !== optionKey;
 
 const validate = function (option, flag) {
-  const keys = { '-n': 'line', '-c': 'byte' };
-  const usage = 'usage: head [-n lines | -c bytes] [file ...]';
-  const value = option.limit;
-
-  if (!isKnownKey(option)) {
-    throw { message: `head: illegal option -- ${option.arg[1]}\n${usage}` };
+  if (!isKnownflag(option)) {
+    throw illegalflagError(option.arg);
   }
-  if (!isPositive(value)) {
-    const key = keys[option.arg];
-    throw { message: `head: illegal ${key} count -- ${value}\n${usage}` };
+  if (!isPositive(option.limit)) {
+    throw illegalcountError(option);
   }
   if (isCombined(option.arg, flag)) {
-    throw { message: 'head: can\'t combine line and byte counts\n' + usage };
+    throw combinationError();
   }
 };
 
-const areFilesGiven = function (files) {
-  if (files.length <= 0) {
+const validateArgs = function (args) {
+  if (args.length <= 0) {
     throw { message: 'usage: head [-n lines | -c bytes] [file ...]' };
   }
 };
 
 exports.validate = validate;
-exports.areFilesGiven = areFilesGiven;
+exports.validateArgs = validateArgs;

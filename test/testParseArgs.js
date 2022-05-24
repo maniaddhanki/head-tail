@@ -1,4 +1,4 @@
-const { parseArgs, parseWithOption, defaultOption, fetchOptions, constructOption, integrateOption } = require('../src/parseArgs.js');
+const { parseArgs, parseWithOption, defaultOption, fetchOptions, constructOption, destructureOption } = require('../src/parseArgs.js');
 
 const assert = require('assert');
 
@@ -21,6 +21,9 @@ describe('parseArgs', () => {
   it('option is count if option does not have key', () => {
     assert.deepStrictEqual(parseArgs(['-4', 'a.txt']), { files: ['a.txt'], option: { arg: '-n', key: 'count', limit: 4 } });
   });
+  it('should throw error if no arguments are given', () => {
+    assert.throws(() => parseArgs([]), { message: 'usage: head [-n lines | -c bytes] [file ...]' });
+  });
 });
 
 describe('parseWithOption', () => {
@@ -41,6 +44,15 @@ describe('parseWithOption', () => {
   });
   it('option is count if option does not have key', () => {
     assert.deepStrictEqual(parseWithOption(['-4', 'a.txt']), { files: ['a.txt'], option: { arg: '-n', key: 'count', limit: 4 } });
+  });
+  it('should throw illegal options are given', () => {
+    assert.throws(() => parseArgs(['-a', '5', 'a.txt']), { message: 'head: illegal option -- a\nusage: head [-n lines | -c bytes] [file ...]' });
+  });
+  it('should throw illegal values are given', () => {
+    assert.throws(() => parseArgs(['-n', '0', 'a.txt']), { message: 'head: illegal line count -- 0\nusage: head [-n lines | -c bytes] [file ...]' });
+  });
+  it('should throw illegal options are given', () => {
+    assert.throws(() => parseArgs(['-n', '5', '-c1', 'a.txt']), { message: 'head: can\'t combine line and byte counts\nusage: head [-n lines | -c bytes] [file ...]' });
   });
 });
 
@@ -76,12 +88,12 @@ describe('constructOption', () => {
   });
 });
 
-describe('integrateOption', () => {
+describe('destructureOption', () => {
   it('should contruct option of given key', () => {
-    assert.deepStrictEqual(integrateOption('-n1'), { arg: '-n', key: 'count', limit: 1 });
-    assert.deepStrictEqual(integrateOption('-c5'), { arg: '-c', key: 'byte', limit: 5 });
+    assert.deepStrictEqual(destructureOption('-n1'), { arg: '-n', key: 'count', limit: 1 });
+    assert.deepStrictEqual(destructureOption('-c5'), { arg: '-c', key: 'byte', limit: 5 });
   });
   it('should contstruct count option if key is not specified', () => {
-    assert.deepStrictEqual(integrateOption('-7'), { arg: '-n', key: 'count', limit: 7 });
+    assert.deepStrictEqual(destructureOption('-7'), { arg: '-n', key: 'count', limit: 7 });
   });
 });
