@@ -1,3 +1,5 @@
+const { validate, areFilesGiven } = require('./validation.js');
+
 const defaultOption = function (args) {
   const files = args;
   const option = { arg: '-n', key: 'count', limit: 10 };
@@ -14,6 +16,7 @@ const constructOption = function (arg, value) {
 const integrateOption = arg => {
   let key = arg.slice(0, 2);
   let value = arg.slice(2);
+
   if (isFinite(arg.slice(1))) {
     key = '-n';
     value = arg.slice(1);
@@ -23,7 +26,7 @@ const integrateOption = arg => {
 
 const isSoloKey = arg => arg.length === 2 && !isFinite(arg.slice(1));
 
-const isKey = arg => arg.startsWith('-');
+const isKey = arg => (/^-/).test(arg);
 
 const fetchOptions = function (args) {
   const options = [];
@@ -41,37 +44,10 @@ const fetchOptions = function (args) {
   return { files, options };
 };
 
-const isUnKnownKey = function (option) {
-  const knownKeys = ['-n', '-c'];
-  return !knownKeys.includes(option.arg);
-};
-
-const isNotPositive = option => !option.limit > 0;
-
-const isCombined = (key, optionKey) => key !== optionKey;
-
-const validate = function (options) {
-  if (options.some(isUnKnownKey)) {
-    throw { usage: 'usage: head [-n lines | -c bytes] [file ...]' };
-  }
-  if (options.some(isNotPositive)) {
-    throw { usage: 'usage: head [-n lines | -c bytes] [file ...]' };
-  }
-  const key = options[0].arg;
-  if (options.some(option => isCombined(key, option.arg))) {
-    throw { usage: 'usage: head [-n lines | -c bytes] [file ...]' };
-  }
-};
-
-const areFilesGiven = function (files) {
-  if (files.length <= 0) {
-    throw { usage: 'usage: head [-n lines | -c bytes] [file ...]' };
-  }
-};
-
 const parseWithOption = function (args) {
   const { files, options } = fetchOptions(args);
-  validate(options);
+  const flag = options[0].arg;
+  options.forEach(option => validate(option, flag));
   areFilesGiven(files);
   const option = options[options.length - 1];
   return { files, option };
@@ -87,5 +63,3 @@ exports.defaultOption = defaultOption;
 exports.fetchOptions = fetchOptions;
 exports.constructOption = constructOption;
 exports.integrateOption = integrateOption;
-exports.validate = validate;
-exports.areFilesGiven = areFilesGiven;

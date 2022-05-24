@@ -1,6 +1,4 @@
 **TODO :**
-- [ ] give appropriate error message
-- [ ] give error in error strem
 - [ ] make head to work for multiple files
 **MAYBE :**
 - [ ] consider an edge case of traling newlines
@@ -38,3 +36,5 @@
 - [x] read commandline arguments in head.js
 - [x] make testValidate.js
 - [x] validate options
+- [x] give appropriate error message
+- [x] give error in error strem
