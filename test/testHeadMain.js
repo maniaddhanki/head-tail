@@ -22,19 +22,19 @@ const mockConsole = (expected) => {
 describe('headMain', () => {
   it('Should give first 10 lines if no option is specified', () => {
     const content = '1\n2\n3\n4\n5\n6\n7\n8\n9\n10\n11';
-    const consoleLog = mockConsole(['\n==> a.txt <==\n1\n2\n3\n4\n5\n6\n7\n8\n9\n10']);
+    const consoleLog = mockConsole(['1\n2\n3\n4\n5\n6\n7\n8\n9\n10']);
     const consoleError = mockConsole([]);
     const readFunction = mockReadFileSync(['a.txt'], 'utf8', [content]);
     headMain(readFunction, consoleLog, consoleError, ['a.txt']);
   });
   it('should give given number of lines', () => {
-    const consoleLog = mockConsole(['\n==> a.txt <==\na\nb']);
+    const consoleLog = mockConsole(['a\nb']);
     const consoleError = mockConsole([]);
     const readFunction = mockReadFileSync(['a.txt'], 'utf8', ['a\nb\nc']);
     headMain(readFunction, consoleLog, consoleError, ['-n', '2', 'a.txt']);
   });
   it('should give given number of bytes from file', () => {
-    const consoleLog = mockConsole(['\n==> a.txt <==\na']);
+    const consoleLog = mockConsole(['a']);
     const consoleError = mockConsole([]);
     const readFunction = mockReadFileSync(['a.txt'], 'utf8', ['a\nb\nc']);
     headMain(readFunction, consoleLog, consoleError, ['-c', '1', 'a.txt']);
