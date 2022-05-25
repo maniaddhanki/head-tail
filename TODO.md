@@ -1,3 +1,18 @@
+# Tail
+
+**TODO :**
+- [ ] make testTail.js and tail.js
+- [ ] implement `tail file`
+
+**MAYBE :**
+
+
+**DONE :**
+
+
+
+# Head
+
 **TODO :**
 - [ ] refactor fetchOptions
 

@@ -1,3 +1,5 @@
+# Head
+
 `head [-n count | -c bytes] file ...`
 
 ```
@@ -11,4 +13,25 @@ head -n count file ...
   Print count lines of each of the specified files.
 
   If more than a single file is specified, each file is preceded by a header consisting of the string ``==> XXX <=='' where ``XXX'' is the name of the file.
+```
+
+# Tail
+
+`tail  [-r] [-q] [-c # | -n #] [file ...]`
+
+```
+tail file ...
+  display the last part of a file. The default starting location is ``-n 10'', or the last 10 lines of the input.
+
+tail -c file ...
+The location is number bytes.
+
+tail -n file ...
+The location is number lines.
+
+tail -r file ...
+The -r option causes the input to be displayed in reverse order, by line. 
+
+tail -q file ...
+Suppresses printing of headers when multiple files are being examined.
 ```
