@@ -49,13 +49,13 @@ describe('headMain', () => {
     const readFunction = mockReadFileSync(['a.txt'], 'utf8', ['a\nb\nc']);
     const consoleLog = mockConsole([]);
     const consoleError = mockConsole([]);
-    assert.throws(() => headMain(readFunction, consoleLog, consoleError, []), { message: 'usage: head [-n lines | -c bytes] [file ...]' });
+    assert.deepStrictEqual(headMain(readFunction, consoleLog, consoleError, []), { message: 'usage: head [-n lines | -c bytes] [file ...]' });
   });
   it('should throw error if no files are given', () => {
     const readFunction = mockReadFileSync(['a.txt'], 'utf8', ['a\nb\nc']);
     const consoleLog = mockConsole([]);
     const consoleError = mockConsole([]);
-    assert.throws(() => headMain(readFunction, consoleLog, consoleError, ['-n', '5']), { message: 'usage: head [-n lines | -c bytes] [file ...]' });
+    assert.deepStrictEqual(headMain(readFunction, consoleLog, consoleError, ['-n', '5']), { message: 'usage: head [-n lines | -c bytes] [file ...]' });
   });
   it('should print results in error and output streams respictively', () => {
     const readFunction = mockReadFileSync(['a.txt', 'b.txt', 'c.txt'], 'utf8', ['ab', 'abc', 'abcdef']);
@@ -68,11 +68,11 @@ describe('headMain', () => {
 describe('headFile', () => {
   it('should give object of file name,headed contents and error status', () => {
     const readFunction = mockReadFileSync(['a.txt'], 'utf8', ['a\nb\nc']);
-    assert.deepStrictEqual(headFile(readFunction, 'a.txt', { flag: '-n', countBy: 'count', value: 2 }), { file: 'a.txt', output: 'a\nb', isError: false });
+    assert.deepStrictEqual(headFile(readFunction, 'a.txt', { flag: '-n', countBy: 'line', value: 2 }), { file: 'a.txt', output: 'a\nb', isError: false });
   });
   it('isError should be true if head was not successfull', () => {
     const readFunction = mockReadFileSync(['b.txt'], 'utf8', ['a\nb\nc']);
-    assert.deepStrictEqual(headFile(readFunction, 'a.txt', { flag: '-n', countBy: 'count', value: 2 }), { file: 'a.txt', output: 'head: a.txt: No such file or directory', isError: true });
+    assert.deepStrictEqual(headFile(readFunction, 'a.txt', { flag: '-n', countBy: 'line', value: 2 }), { file: 'a.txt', output: 'head: a.txt: No such file or directory', isError: true });
   });
 });
 

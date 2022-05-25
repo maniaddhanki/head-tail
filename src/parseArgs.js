@@ -2,12 +2,12 @@ const { validate, validateArgs } = require('./validation.js');
 
 const defaultOption = function (args) {
   const files = args;
-  const option = { flag: '-n', countBy: 'count', value: 10 };
+  const option = { flag: '-n', countBy: 'line', value: 10 };
   return { files, option };
 };
 
 const constructOption = function (flag, value) {
-  const keys = { '-n': 'count', '-c': 'byte' };
+  const keys = { '-n': 'line', '-c': 'byte' };
   const countBy = keys[flag];
   const limit = +value;
   return { flag, countBy, value: limit };

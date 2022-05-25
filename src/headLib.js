@@ -13,7 +13,7 @@ const countByLines = (content, count) => {
 };
 
 const head = (content, { countBy, value }) => {
-  const countBases = { count: countByLines, byte: firstNCharacters };
+  const countBases = { line: countByLines, byte: firstNCharacters };
   return countBases[countBy](content, value);
 };
 

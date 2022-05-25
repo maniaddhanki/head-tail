@@ -31,8 +31,14 @@ const headFile = function (readFunction, file, option) {
 };
 
 const headMain = (readFunction, logger, error, args) => {
-  const { files, option } = parseArgs(args);
-  validateArgs(files);
+  let parsedArgs;
+  try {
+    parsedArgs = parseArgs(args);
+    validateArgs(parsedArgs.files);
+  } catch (error) {
+    return error;
+  }
+  const { files, option } = parsedArgs;
   const formatter = files.length === 1 ? noFormat : arrowFormat;
   const headedFiles = files.map(file => headFile(readFunction, file, option));
   headedFiles.forEach(result => print(logger, error, result, formatter));

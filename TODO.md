@@ -1,13 +1,15 @@
 # Tail
 
 **TODO :**
-- [ ] make testTail.js and tail.js
 - [ ] implement `tail file`
+- [ ] parse -n option from command line
 
 **MAYBE :**
-
+- [ ] Extract countLines function from tail
 
 **DONE :**
+- [x] make testTail.js and tail.js
+- [x] write a main for tail
 
 
 
