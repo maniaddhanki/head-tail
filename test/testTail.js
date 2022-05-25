@@ -9,6 +9,9 @@ describe('tail', () => {
     assert.strictEqual(tail('a\nb\nc\nd\ne\nf\ng\nh\ni\nj\nk\nl', '-n'), 'c\nd\ne\nf\ng\nh\ni\nj\nk\nl');
   });
   it('should give last bytes of given content', () => {
-    assert.strictEqual(tail('abcdefghijkl', '-c'), 'cdefghijkl');
+    assert.strictEqual(tail('abcdefghijkl', '-c', 10), 'cdefghijkl');
+  });
+  it('should given last lines of given count', () => {
+    assert.strictEqual(tail('a\nb\nc\nd', '-n', 2), 'c\nd');
   });
 });
