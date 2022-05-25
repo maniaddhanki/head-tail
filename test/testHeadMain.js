@@ -68,11 +68,11 @@ describe('headMain', () => {
 describe('headFile', () => {
   it('should give object of file name,headed contents and error status', () => {
     const readFunction = mockReadFileSync(['a.txt'], 'utf8', ['a\nb\nc']);
-    assert.deepStrictEqual(headFile(readFunction, 'a.txt', { arg: '-n', key: 'count', limit: 2 }), { file: 'a.txt', output: 'a\nb', isError: false });
+    assert.deepStrictEqual(headFile(readFunction, 'a.txt', { flag: '-n', countBy: 'count', value: 2 }), { file: 'a.txt', output: 'a\nb', isError: false });
   });
   it('isError should be true if head was not successfull', () => {
     const readFunction = mockReadFileSync(['b.txt'], 'utf8', ['a\nb\nc']);
-    assert.deepStrictEqual(headFile(readFunction, 'a.txt', { arg: '-n', key: 'count', limit: 2 }), { file: 'a.txt', output: 'head: a.txt: No such file or directory', isError: true });
+    assert.deepStrictEqual(headFile(readFunction, 'a.txt', { flag: '-n', countBy: 'count', value: 2 }), { file: 'a.txt', output: 'head: a.txt: No such file or directory', isError: true });
   });
 });
 

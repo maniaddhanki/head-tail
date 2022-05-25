@@ -17,3 +17,5 @@ const tail = function (content, countBy, count) {
 };
 
 exports.tail = tail;
+exports.lastNLines = lastNLines;
+exports.lastNCharacters = lastNCharacters;

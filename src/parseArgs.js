@@ -2,15 +2,15 @@ const { validate, validateArgs } = require('./validation.js');
 
 const defaultOption = function (args) {
   const files = args;
-  const option = { arg: '-n', key: 'count', limit: 10 };
+  const option = { flag: '-n', countBy: 'count', value: 10 };
   return { files, option };
 };
 
-const constructOption = function (arg, value) {
+const constructOption = function (flag, value) {
   const keys = { '-n': 'count', '-c': 'byte' };
-  const key = keys[arg];
+  const countBy = keys[flag];
   const limit = +value;
-  return { arg, key, limit };
+  return { flag, countBy, value: limit };
 };
 
 const destructureOption = arg => {
@@ -46,7 +46,7 @@ const fetchOptions = function (args) {
 
 const parseWithOption = function (args) {
   const { files, options } = fetchOptions(args);
-  const flag = options[0].arg;
+  const flag = options[0].flag;
   options.forEach(option => validate(option, flag));
   const option = options[options.length - 1];
   return { files, option };

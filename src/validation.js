@@ -6,8 +6,8 @@ const illegalflagError = (flag) => {
 
 const illegalcountError = (option) => {
   const keys = { '-n': 'line', '-c': 'byte' };
-  const key = keys[option.arg];
-  const value = option.limit;
+  const key = keys[option.flag];
+  const value = option.value;
   return { message: `head: illegal ${key} count -- ${value}\n${usage}` };
 };
 
@@ -17,7 +17,7 @@ const combinationError = () => {
 
 const isKnownflag = function (option) {
   const knownflags = ['-n', '-c'];
-  return knownflags.includes(option.arg);
+  return knownflags.includes(option.flag);
 };
 
 const isPositive = limit => limit > 0;
@@ -26,12 +26,12 @@ const isCombined = (key, optionKey) => key !== optionKey;
 
 const validate = function (option, flag) {
   if (!isKnownflag(option)) {
-    throw illegalflagError(option.arg);
+    throw illegalflagError(option.flag);
   }
-  if (!isPositive(option.limit)) {
+  if (!isPositive(option.value)) {
     throw illegalcountError(option);
   }
-  if (isCombined(option.arg, flag)) {
+  if (isCombined(option.flag, flag)) {
     throw combinationError();
   }
 };
