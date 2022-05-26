@@ -1,16 +1,16 @@
-const { head } = require('./headLib');
+const { head } = require('./headLib.js');
 const { parseArgs } = require('./parseArgs.js');
-const { validateArgs } = require('./validation.js');
+const { validateArgs } = require('./validatorLib.js');
 
 const noFormat = () => '';
 
 const arrowFormat = file => `\n==> ${file} <==\n`;
 
-const print = function (logger, error, result, formatter) {
-  let displayer = logger;
+const print = function (log, consoleError, result, formatter) {
+  let displayer = log;
   let format = formatter(result.file);
   if (result.isError) {
-    displayer = error;
+    displayer = consoleError;
     format = '';
   }
   displayer(format + result.output);
@@ -30,18 +30,19 @@ const headFile = function (readFunction, file, option) {
   }
 };
 
-const headMain = (readFunction, logger, error, args) => {
+const headMain = (readFunction, log, consoleError, args) => {
   let parsedArgs;
   try {
     parsedArgs = parseArgs(args);
     validateArgs(parsedArgs.files);
   } catch (error) {
-    return error;
+    consoleError(error.message);
+    return;
   }
   const { files, option } = parsedArgs;
   const formatter = files.length === 1 ? noFormat : arrowFormat;
   const headedFiles = files.map(file => headFile(readFunction, file, option));
-  headedFiles.forEach(result => print(logger, error, result, formatter));
+  headedFiles.forEach(result => print(log, consoleError, result, formatter));
 };
 
 exports.headFile = headFile;

@@ -1,4 +1,4 @@
-const { validate, validateArgs } = require('./validation.js');
+const { validate, validateArgs } = require('./validatorLib.js');
 
 const defaultOption = function (args) {
   const files = args;

@@ -1,6 +1,6 @@
 const assert = require('assert');
 
-const { validate, validateArgs } = require('../src/validation.js');
+const { validate, validateArgs } = require('../src/validatorLib.js');
 
 describe('validate', () => {
   it('should throw error if unknown options are mentioned', () => {

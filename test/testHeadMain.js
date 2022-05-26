@@ -15,7 +15,7 @@ const mockConsole = (expected) => {
   let index = 0;
   return content => {
     index++;
-    return assert.strictEqual(expected[index - 1], content);
+    assert.strictEqual(expected[index - 1], content);
   };
 };
 
@@ -48,14 +48,14 @@ describe('headMain', () => {
   it('should throw error if no arguments are given', () => {
     const readFunction = mockReadFileSync(['a.txt'], 'utf8', ['a\nb\nc']);
     const consoleLog = mockConsole([]);
-    const consoleError = mockConsole([]);
-    assert.deepStrictEqual(headMain(readFunction, consoleLog, consoleError, []), { message: 'usage: head [-n lines | -c bytes] [file ...]' });
+    const consoleError = mockConsole(['usage: head [-n lines | -c bytes] [file ...]']);
+    headMain(readFunction, consoleLog, consoleError, []);
   });
   it('should throw error if no files are given', () => {
     const readFunction = mockReadFileSync(['a.txt'], 'utf8', ['a\nb\nc']);
     const consoleLog = mockConsole([]);
-    const consoleError = mockConsole([]);
-    assert.deepStrictEqual(headMain(readFunction, consoleLog, consoleError, ['-n', '5']), { message: 'usage: head [-n lines | -c bytes] [file ...]' });
+    const consoleError = mockConsole(['usage: head [-n lines | -c bytes] [file ...]']);
+    headMain(readFunction, consoleLog, consoleError, ['-n', '5']);
   });
   it('should print results in error and output streams respictively', () => {
     const readFunction = mockReadFileSync(['a.txt', 'b.txt', 'c.txt'], 'utf8', ['ab', 'abc', 'abcdef']);
