@@ -13,10 +13,13 @@ const mockReadFileSync = (file, encode, content) => {
 
 const mockConsole = (expected) => {
   let index = 0;
-  return content => {
+  const display = content => {
     index++;
+    display.count++;
     assert.strictEqual(expected[index - 1], content);
   };
+  display.count = 0;
+  return display;
 };
 
 describe('headMain', () => {
@@ -26,42 +29,56 @@ describe('headMain', () => {
     const consoleError = mockConsole([]);
     const readFunction = mockReadFileSync(['a.txt'], 'utf8', [content]);
     headMain(readFunction, consoleLog, consoleError, ['a.txt']);
+    assert.strictEqual(consoleLog.count, 1);
+    assert.strictEqual(consoleError.count, 0);
   });
   it('should give given number of lines', () => {
     const consoleLog = mockConsole(['a\nb']);
     const consoleError = mockConsole([]);
     const readFunction = mockReadFileSync(['a.txt'], 'utf8', ['a\nb\nc']);
     headMain(readFunction, consoleLog, consoleError, ['-n', '2', 'a.txt']);
+    assert.strictEqual(consoleLog.count, 1);
+    assert.strictEqual(consoleError.count, 0);
   });
   it('should give given number of bytes from file', () => {
     const consoleLog = mockConsole(['a']);
     const consoleError = mockConsole([]);
     const readFunction = mockReadFileSync(['a.txt'], 'utf8', ['a\nb\nc']);
     headMain(readFunction, consoleLog, consoleError, ['-c', '1', 'a.txt']);
+    assert.strictEqual(consoleLog.count, 1);
+    assert.strictEqual(consoleError.count, 0);
   });
   it('should throw error if file is not found', () => {
     const readFunction = mockReadFileSync(['a.txt'], 'utf8', ['a\nb\nc']);
     const consoleLog = mockConsole(['\n==> a.txt <==\na']);
     const consoleError = mockConsole(['head: b.txt: No such file or directory']);
     headMain(readFunction, consoleLog, consoleError, ['-n', '1', 'a.txt', 'b.txt']);
+    assert.strictEqual(consoleLog.count, 1);
+    assert.strictEqual(consoleError.count, 1);
   });
   it('should throw error if no arguments are given', () => {
     const readFunction = mockReadFileSync(['a.txt'], 'utf8', ['a\nb\nc']);
     const consoleLog = mockConsole([]);
     const consoleError = mockConsole(['usage: head [-n lines | -c bytes] [file ...]']);
     headMain(readFunction, consoleLog, consoleError, []);
+    assert.strictEqual(consoleLog.count, 0);
+    assert.strictEqual(consoleError.count, 1);
   });
   it('should throw error if no files are given', () => {
     const readFunction = mockReadFileSync(['a.txt'], 'utf8', ['a\nb\nc']);
     const consoleLog = mockConsole([]);
     const consoleError = mockConsole(['usage: head [-n lines | -c bytes] [file ...]']);
     headMain(readFunction, consoleLog, consoleError, ['-n', '5']);
+    assert.strictEqual(consoleLog.count, 0);
+    assert.strictEqual(consoleError.count, 1);
   });
   it('should print results in error and output streams respictively', () => {
     const readFunction = mockReadFileSync(['a.txt', 'b.txt', 'c.txt'], 'utf8', ['ab', 'abc', 'abcdef']);
     const consoleLog = mockConsole(['\n==> a.txt <==\nab', '\n==> b.txt <==\nabc', '\n==> c.txt <==\nabcde']);
     const consoleError = mockConsole(['head: d.txt: No such file or directory']);
     headMain(readFunction, consoleLog, consoleError, ['-c', '5', 'a.txt', 'b.txt', 'c.txt', 'd.txt']);
+    assert.strictEqual(consoleLog.count, 3);
+    assert.strictEqual(consoleError.count, 1);
   });
 });
 
@@ -83,12 +100,16 @@ describe('print', () => {
     const result = { file: 'a.txt', output: 'a\nb', isError: false };
     print(consoleLog, consoleError, result, arrowFormat);
     print(consoleLog, consoleError, result, noFormat);
+    assert.strictEqual(consoleLog.count, 2);
+    assert.strictEqual(consoleError.count, 0);
   });
   it('should print to error stream if error occured', () => {
     const consoleLog = mockConsole([]);
     const consoleError = mockConsole(['head: a.txt: No such file or directory']);
     const result = { file: 'a.txt', output: 'head: a.txt: No such file or directory', isError: true };
     print(consoleLog, consoleError, result, arrowFormat);
+    assert.strictEqual(consoleLog.count, 0);
+    assert.strictEqual(consoleError.count, 1);
   });
 });
 
