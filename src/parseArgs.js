@@ -1,9 +1,7 @@
 const { validate, validateArgs } = require('./validatorLib.js');
 
 const defaultOption = function (args) {
-  const files = args;
-  const option = { flag: '-n', countBy: 'line', value: 10 };
-  return { files, option };
+  return { flag: '-n', countBy: 'line', value: 10 };
 };
 
 const constructOption = function (flag, value) {
@@ -26,7 +24,7 @@ const destructureOption = arg => {
 
 const isSoloKey = arg => arg.length === 2 && !isFinite(arg.slice(1));
 
-const isKey = arg => (/^-/).test(arg);
+const isKey = arg => arg?.startsWith('-');
 
 const fetchOptions = function (args) {
   const options = [];
@@ -40,11 +38,15 @@ const fetchOptions = function (args) {
     }
     index++;
   }
+  if (options.length === 0) {
+    options.push(defaultOption());
+  }
   const files = args.slice(index);
   return { files, options };
 };
 
-const parseWithOption = function (args) {
+const parseArgs = function (args) {
+  validateArgs(args);
   const { files, options } = fetchOptions(args);
   const flag = options[0].flag;
   options.forEach(option => validate(option, flag));
@@ -52,13 +54,7 @@ const parseWithOption = function (args) {
   return { files, option };
 };
 
-const parseArgs = function (args) {
-  validateArgs(args);
-  return args[0].startsWith('-') ? parseWithOption(args) : defaultOption(args);
-};
-
 exports.parseArgs = parseArgs;
-exports.parseWithOption = parseWithOption;
 exports.defaultOption = defaultOption;
 exports.fetchOptions = fetchOptions;
 exports.constructOption = constructOption;
