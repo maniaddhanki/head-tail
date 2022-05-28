@@ -12,9 +12,11 @@ const countByLines = (content, count) => {
   return joinLines(firstLines);
 };
 
-const head = (content, { countBy, value }) => {
-  const countBases = { line: countByLines, byte: firstNCharacters };
-  return countBases[countBy](content, value);
+const head = (content, { flag, limit }) => {
+  if (flag === '-c') {
+    return firstNCharacters(content, limit);
+  }
+  return countByLines(content, limit);
 };
 
 exports.head = head;

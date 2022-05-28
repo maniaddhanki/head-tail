@@ -15,9 +15,12 @@
 # Head
 
 - **TODO :**
+  - [ ] add detail to validation error messages
+  - [ ] deal with other error messages that are thrown while reading
+  - [ ] extract a readFile function
   - [ ] refactor fetchOptions
-
 - **MAYBE :**
+  - [ ] instead of passing key of fuction pass reference to head
   - [ ] consider an edge case of traling newlines
 
 - **DONE :**
@@ -58,3 +61,4 @@
   - [x] give error in error strem
   - [x] make head to work for multiple files
   - [x] make headMain.js and testHeadMain.js
+  - [x] get rid of `countBy` key in option object

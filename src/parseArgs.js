@@ -1,14 +1,12 @@
 const { validate, validateArgs } = require('./validatorLib.js');
 
 const defaultOption = function (args) {
-  return { flag: '-n', countBy: 'line', value: 10 };
+  return { flag: '-n', limit: 10 };
 };
 
-const constructOption = function (flag, value) {
-  const keys = { '-n': 'line', '-c': 'byte' };
-  const countBy = keys[flag];
-  const limit = +value;
-  return { flag, countBy, value: limit };
+const constructOption = function (arg) {
+  const [flag, limit] = destructureOption(arg);
+  return { flag, limit };
 };
 
 const destructureOption = arg => {
@@ -19,10 +17,8 @@ const destructureOption = arg => {
     key = '-n';
     value = arg.slice(1);
   }
-  return constructOption(key, value);
+  return [key, value];
 };
-
-const isSoloKey = arg => arg.length === 2 && !isFinite(arg.slice(1));
 
 const isKey = arg => arg?.startsWith('-');
 
@@ -30,12 +26,13 @@ const fetchOptions = function (args) {
   const options = [];
   let index = 0;
   while (isKey(args[index])) {
-    if (isSoloKey(args[index])) {
-      options.push(constructOption(args[index], args[index + 1]));
+    const option = constructOption(args[index]);
+    if (option.limit === '') {
       index++;
-    } else {
-      options.push(destructureOption(args[index]));
+      option.limit = args[index];
     }
+    option.limit = +option.limit
+    options.push(option);
     index++;
   }
   if (options.length === 0) {
